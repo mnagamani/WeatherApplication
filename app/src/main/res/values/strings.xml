@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="enterLocation">Enter city name to search</string>
+    <string name="weatherDetails">Details</string>
+    <string name="current_location">Current Location</string>
+</resources>

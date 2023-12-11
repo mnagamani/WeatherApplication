@@ -1,0 +1,139 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <import type="android.view.View"/>
+        <variable
+            name="searchViewModel"
+            type="com.example.weather.screen.search.viewmodel.SearchViewModel" />
+        <variable
+            name="imageUrl"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/medium_padding"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{searchViewModel.dataLoading ? View.VISIBLE : View.GONE}"/>
+
+        <TextView
+            android:id="@+id/screen_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/weatherDetails"
+            tools:text="Details"
+            android:textAlignment="center"
+            android:textSize="@dimen/titleTextSize"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/enterSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constrainedWidth="true"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintTop_toBottomOf="@id/screen_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:maxLines="1"
+            app:layout_constraintEnd_toStartOf="@+id/button"
+            android:hint="@string/enterLocation"
+            android:text="@={searchViewModel.searchTerm}" />
+
+        <ImageButton
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/search"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/enterSearch"
+            app:layout_constraintBottom_toBottomOf="@id/enterSearch"
+            android:onClick="@{(v)->searchViewModel.onSearchClicked()}" />
+
+            <TextView
+                android:id="@+id/currentLocationTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/enterSearch"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="@dimen/dimen_title_content"
+                android:text="@string/current_location"
+                tools:text="@string/current_location" />
+
+            <TextView
+                android:id="@+id/temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/currentLocationTitle"
+                android:textSize="@dimen/dimen_title_content"
+                tools:text="30 F"
+                app:setTemp="@{searchViewModel.details.main.temp}" />
+
+            <TextView
+                android:id="@+id/feelsLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/temp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="@dimen/dimen_content"
+                tools:text="Feels like 30 F"
+                app:setFeelsLike="@{searchViewModel.details.main.feels_like}" />
+
+            <TextView
+                android:id="@+id/humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/feelsLike"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Humidity 40%"
+                android:textSize="@dimen/dimen_content"
+                app:setHumidity="@{searchViewModel.details.main.humidity}"/>
+            <TextView
+                android:id="@+id/visibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/humidity"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="@dimen/dimen_content"
+                tools:text="10.0 km"
+                app:setVisibility="@{searchViewModel.details.visibility}"/>
+            <TextView
+                android:id="@+id/pressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/visibility"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="@dimen/dimen_content"
+                tools:text="1023hPa"
+                app:setPressure="@{searchViewModel.details.main.pressure}"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/weatherListRecycler"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintTop_toBottomOf="@id/pressure"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
+            app:setItems="@{searchViewModel.details.weather}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

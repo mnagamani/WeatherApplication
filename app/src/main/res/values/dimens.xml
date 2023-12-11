@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="titleTextSize">30sp</dimen>
+    <dimen name="medium_padding">14dp</dimen>
+    <dimen name="medium_margin">14dp</dimen>
+    <dimen name="dimen_content">16sp</dimen>
+    <dimen name="dimen_title_content">30sp</dimen>
+    <dimen name="weather_icon_size">48dp</dimen>
+</resources>
